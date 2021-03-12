@@ -115,23 +115,23 @@ def train(train_loader, model, optimizer, epoch, test_path):
         meandice = test(model,test_path)
         if meandice > best:
             best = meandice
-            torch.save(model.state_dict(), save_path + 'HarD-MSEG-best.pth' )
+            torch.save(model.state_dict(), save_path +str(best)+ 'HarD-MSEG-best.pth' )
             print('[Saving Snapshot:]', save_path + 'HarD-MSEG-best.pth',meandice)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     
     parser.add_argument('--epoch', type=int,
-                        default=100, help='epoch number')
+                        default=30, help='epoch number')
     
     parser.add_argument('--lr', type=float,
-                        default=1e-4, help='learning rate')
+                        default=3e-5, help='learning rate')
     
     parser.add_argument('--optimizer', type=str,
                         default='Adam', help='choosing optimizer Adam or SGD')
     
     parser.add_argument('--augmentation',
-                        default=False, help='choose to do random flip rotation')
+                        default=True, help='choose to do random flip rotation')
     
     parser.add_argument('--batchsize', type=int,
                         default=16, help='training batch size')
@@ -149,10 +149,10 @@ if __name__ == '__main__':
                         default=50, help='every n epochs decay learning rate')
     
     parser.add_argument('--train_path', type=str,
-                        default='/work/james128333/PraNet/TrainDataset', help='path to train dataset')
+                        default='haveLabel', help='path to train dataset')
     
     parser.add_argument('--test_path', type=str,
-                        default='/work/james128333/PraNet/TestDataset/Kvasir' , help='path to testing Kvasir dataset')
+                        default='haveLabel_val' , help='path to testing Kvasir dataset')
     
     parser.add_argument('--train_save', type=str,
                         default='HarD-MSEG-best')

@@ -3,20 +3,21 @@ import torch.nn.functional as F
 import numpy as np
 import os, argparse
 from scipy import misc
+import imageio
 from lib.HarDMSEG import HarDMSEG
 from utils.dataloader import test_dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--testsize', type=int, default=352, help='testing size')
-parser.add_argument('--pth_path', type=str, default='HarD-MSEG-best.pth')
-#for _data_name in ['CVC-ClinicDB']:
-for _data_name in ['CVC-300', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB']:
+parser.add_argument('--pth_path', type=str, default='snapshots/HarD-MSEG-best/0.9930570000000003HarD-MSEG-best.pth')
+for _data_name in ['newdata','haveLabel_test']:
+# for _data_name in ['CVC-300', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB']:
     
     ##### put ur data_path here #####
-    data_path = '/work/james128333/PraNet/TestDataset/{}/'.format(_data_name)
+    data_path = './{}/'.format(_data_name)
     #####                       #####
     
-    save_path = './results/HarDMSEG/{}/'.format(_data_name)
+    save_path = './resultsThreshold/HarDMSEG/{}/'.format(_data_name)
     opt = parser.parse_args()
     model = HarDMSEG()
     model.load_state_dict(torch.load(opt.pth_path))
@@ -38,5 +39,8 @@ for _data_name in ['CVC-300', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-Lar
         res = F.upsample(res, size=gt.shape, mode='bilinear', align_corners=False)
         res = res.sigmoid().data.cpu().numpy().squeeze()
         res = (res - res.min()) / (res.max() - res.min() + 1e-8)
-        
-        misc.imsave(save_path+name, res)
+        res = (res >= 0.5).astype(np.uint8)*255
+        imageio.imwrite(save_path+name, res)
+
+# 56480198.jpg has a glitch
+# 56481663.jpg
