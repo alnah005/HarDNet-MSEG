@@ -122,7 +122,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     
     parser.add_argument('--epoch', type=int,
-                        default=30, help='epoch number')
+                        default=10, help='epoch number')
     
     parser.add_argument('--lr', type=float,
                         default=3e-5, help='learning rate')
@@ -185,5 +185,5 @@ if __name__ == '__main__':
     print("#"*20, "Start Training", "#"*20)
 
     for epoch in range(1, opt.epoch):
-        adjust_lr(optimizer, opt.lr, epoch, 0.1, 200)
+        # adjust_lr(optimizer, opt.lr, epoch, 0.1, 200)
         train(train_loader, model, optimizer, epoch, opt.test_path)
