@@ -4,7 +4,7 @@ from dask_image.imread import imread
 stack = imread("./haveLabel_test/images_old/*.jpg")
 stack2 = imread("./haveLabel_test/masks_old/*.jpg")
 stack3 = imread("./resultsThreshold/HarDMSEG/reconstructed_haveLabel_test/*.jpg")
-stack4 = imread("./results/HarDMSEG/haveLabel_test/*.png")
+stack4 = imread("./results/HarDMSEG/haveLabel_test/*.jpg")
 
 with napari.gui_qt():
     viewer = napari.view_image(stack, name='Images')

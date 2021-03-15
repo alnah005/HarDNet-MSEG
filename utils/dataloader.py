@@ -133,14 +133,17 @@ class test_dataset:
         self.size = len(self.images)
         self.index = 0
 
-    def load_data(self):
+    def load_data(self,return_shape=False):
         image = self.rgb_loader(self.images[self.index])
+        shape = np.asarray(image).shape
         image = self.transform(image).unsqueeze(0)
         gt = self.binary_loader(self.gts[self.index])
         name = self.images[self.index].split('/')[-1]
         # if name.endswith('.jpg'):
         #     name = name.split('.jpg')[0] + '.png'
         self.index += 1
+        if return_shape:
+            return image,gt, name, shape
         return image, gt, name
 
     def rgb_loader(self, path):

@@ -3,7 +3,7 @@ from dask_image.imread import imread
 
 stack = imread("./newdata/images_old/*.jpg")
 stack2 = imread("./resultsThreshold/HarDMSEG/reconstructed_newdata/*.jpg")
-stack3 = imread("./results/HarDMSEG/newdata/*.png")
+stack3 = imread("./results/HarDMSEG/newdata/*.jpg")
 
 with napari.gui_qt():
     viewer = napari.view_image(stack, name='Images')
